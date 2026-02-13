@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}{{ article.title }} - AI Today Japan{% endblock %}
+
+{% block content %}
+<div class="article-detail">
+  <h1>{{ article.title }}</h1>
+
+  <div class="article-meta">
+    <span>{{ article.source }}</span> |
+    <span>{{ article.category }}</span> |
+    <span>👁️ {{ article.views }}回</span>
+  </div>
+
+  {% if article.summary_ja %}
+    <p style="white-space: pre-line; margin-top: 16px;">{{ article.summary_ja }}</p>
+  {% endif %}
+
+  <p style="margin-top:16px;">この記事は外部サイトで全文を読むことができます。</p>
+  <a href="{{ article.url }}" class="read-original" target="_blank" rel="noopener">元記事を読む →</a>
+
+  {% if related_articles %}
+    <h3 style="margin-top:24px;">関連</h3>
+    <ul>
+      {% for r in related_articles %}
+        <li><a href="{{ url_for('main.article_detail', article_id=r.id) }}">{{ r.title }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</div>
+{% endblock %}
