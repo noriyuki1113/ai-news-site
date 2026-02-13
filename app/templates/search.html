@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}検索結果: {{ query }} - AI Today Japan{% endblock %}
+
+{% block content %}
+<h1>検索結果: "{{ query }}"</h1>
+<p>{{ articles|length }}件</p>
+
+<div class="articles-grid">
+  {% for article in articles %}
+  <article class="article-card">
+    <div class="article-content">
+      <h2 class="article-title">
+        <a href="{{ url_for('main.article_detail', article_id=article.id) }}">{{ article.title }}</a>
+      </h2>
+      {% if article.summary_ja %}
+        <p class="article-snippet" style="white-space: pre-line;">{{ article.summary_ja }}</p>
+      {% else %}
+        <p class="article-snippet">{{ (article.snippet or '')[:200] }}...</p>
+      {% endif %}
+    </div>
+  </article>
+  {% endfor %}
+</div>
+{% endblock %}
