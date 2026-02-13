@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}AI Today Japan{% endblock %}</title>
+  <meta name="description" content="{% block description %}最新のAIニュースを毎日お届け{% endblock %}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header class="header">
+  <div class="container">
+    <h1 class="logo"><a href="{{ url_for('main.index') }}">🤖 AI Today Japan</a></h1>
+    <nav class="nav">
+      <a href="{{ url_for('main.index') }}">ホーム</a>
+      <a href="{{ url_for('main.trending') }}">トレンド</a>
+      <form action="{{ url_for('main.search') }}" method="get" class="search-form">
+        <input type="text" name="q" placeholder="検索..." class="search-input">
+        <button type="submit">🔍</button>
+      </form>
+    </nav>
+  </div>
+</header>
+
+<nav class="category-nav">
+  <div class="container">
+    <a href="{{ url_for('main.index') }}" class="{% if not current_category %}active{% endif %}">すべて</a>
+    {% for cat in categories %}
+      <a href="{{ url_for('main.index', category=cat) }}" class="{% if current_category == cat %}active{% endif %}">{{ cat }}</a>
+    {% endfor %}
+  </div>
+</nav>
+
+<main class="main">
+  <div class="container">
+    {% block content %}{% endblock %}
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p>&copy; 2026 AI Today Japan</p>
+  </div>
+</footer>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
